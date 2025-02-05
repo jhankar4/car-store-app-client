@@ -1,0 +1,134 @@
+@media screen and (min-width: 576px) {
+    .lg-screen-nav{
+        display: block;
+    }
+    .mb-screen-nav{
+        display: none;
+    }
+}
+@media screen and (max-width: 576px) {
+    .lg-screen-nav{
+        display: none;
+    }
+    .mb-screen-nav{
+        display: block;
+    }
+}
+/* global  */
+.icon-btn{
+    width: 45px;
+    height: 45px;
+    background-color: #7427e0;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+/* Hero slider  */
+.container{
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.slider{
+    margin: 0;
+    height: 70vh;
+    color: #fff;
+    
+    position: relative;
+}
+.slider:before{
+    content: '';
+    display: block;
+    width: 400px;
+    height: 200%;
+    background-color: #0000000a;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    transform: rotate(55deg);
+}
+.slider-1{
+    background: #b280f5;
+    border-top: 5px solid #000; 
+}
+.slider-2{
+    background: #d50020;
+    border-top: 5px solid #7427e0; 
+}
+.slider .content-wrapper{}
+.slider .content-wrapper .headline{
+    font-size: 52px;
+    line-height: 1.3;
+}
+.slider .content-wrapper .sub-headline{
+    font-size: 28px;
+    line-height: 1.1;
+    font-weight: 300;
+    width: 85%;
+    margin-top: 16px;
+    margin-bottom: 30px;
+}
+.slider .slider-object img{
+    width: 100%;
+    object-fit: cover;
+    margin-top: 60px;
+}
+.special-offers{
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.special-offers .heading{
+    border-bottom: 1px solid #ddd;
+    position: relative;
+    padding: 10px;
+    padding-bottom: 6px;
+    font-size: 18px;
+    color: #212121;
+    margin-bottom: 16px;
+
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.special-offers .heading:before{
+    content: '';
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+    display: block;
+    width: 135px;
+    height: 2px;
+    border-bottom: 2px solid #212121;
+    
+}
+
+.special-offers .single-slide .card{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.special-offers .slick-next,
+.special-offers .slick-prev{
+    width: 35px;
+    height: 35px;
+    background: #000000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+.special-offers .slick-next:after{
+    top: 12px;
+    left: 9px;
+}
+
+.special-offers .slick-prev:after{
+    top: 12px;
+    left: 14px;
+}

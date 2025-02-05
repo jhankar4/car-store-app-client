@@ -1,12 +1,14 @@
 
 import './App.css'
+import MainLayout from './components/layout/MainLayout'
+import Home from './pages/Home'
 
 function App() {
   
   return (
-    <>
-      <h1>Welcome to Car store app</h1>
-    </>
+    <MainLayout userRole="user">
+      <Home />
+    </MainLayout>
   )
 }
 
