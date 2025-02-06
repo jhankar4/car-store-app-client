@@ -78,8 +78,34 @@
 .slider .slider-object img{
     width: 100%;
     object-fit: cover;
-    margin-top: 60px;
+    margin-top: 80px;
 }
+/* .slick-active .slider-object img {
+    animation: zoomIn 0.5s ease-in;
+    transition: 0.5s;
+}
+@keyframes zoomIn {
+    from{
+        transform: scale(0.5) rotate(5deg);
+    }
+    to{
+        transform: scale(1) rotate(0deg);
+    }
+} */
+@keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateX(50px) scale(0.8) rotate(2deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1) rotate(0deg);
+    }
+  }
+  
+  .animate-img img {
+    animation: fadeSlide 0.8s ease-in-out;
+  }
 .special-offers{
     padding-top: 70px;
     padding-bottom: 70px;

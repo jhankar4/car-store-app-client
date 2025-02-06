@@ -59,6 +59,7 @@ export default function SpecialOffersCards() {
         <h2 className="heading">Special offers</h2>
 
         <Carousel arrows dots={false} infinite={true} 
+        pauseOnHover={false}
         slidesToShow={4} autoplay={true}
         autoplaySpeed={3500}
         className='slider-wrapper'

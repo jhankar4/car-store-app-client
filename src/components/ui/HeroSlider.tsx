@@ -1,6 +1,8 @@
 import { Button, Card, Carousel, Col, Row } from "antd";
+import { useState } from "react";
 
 export default function HeroSlider() {
+    const [animate, setAnimate] = useState(false);
 
       type THeroItem = {
         title: string;
@@ -21,7 +23,11 @@ export default function HeroSlider() {
 
       
   return (
-    <Carousel arrows={false} dots={false} infinite={true} autoplay={true} autoplaySpeed={5500}>
+    <Carousel arrows={false} dots={false} infinite={true} autoplay={true} autoplaySpeed={5500}
+    beforeChange={() => {
+        setAnimate(false); // Reset animation
+        setTimeout(() => setAnimate(true), 50); // Reapply animation
+      }}>
         {heroItems.map((item, index) => (
             <div key={index}>
                 <div className={`slider ${index === 1 ? "slider-2" : "slider-1"}`}>
@@ -40,7 +46,7 @@ export default function HeroSlider() {
                             </div>
                         </Col>
                         <Col md={24} lg={12}>
-                            <div className="slider-object">
+                            <div className={`slider-object ${animate ? "animate-img" : ""}`}>
                                 <img src="car-1.png" alt="Car" />
                             </div>
                         </Col>

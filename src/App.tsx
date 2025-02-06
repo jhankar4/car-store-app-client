@@ -1,14 +1,13 @@
 
 import './App.css'
+import AdminLayout from './components/layout/AdminLayout';
 import MainLayout from './components/layout/MainLayout'
-import Home from './pages/Home'
 
 function App() {
   
+  const user = 'user';
   return (
-    <MainLayout userRole="user">
-      <Home />
-    </MainLayout>
+    user === 'user' ? <MainLayout /> : <AdminLayout />
   )
 }
 
