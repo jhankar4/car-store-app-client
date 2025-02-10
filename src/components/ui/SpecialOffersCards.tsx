@@ -83,7 +83,7 @@ export default function SpecialOffersCards() {
                                 &nbsp;&nbsp;
                                 <span style={{color: '#212121', fontWeight: '500'}}>$2200</span>
                             </div>,
-                            <button className='icon-btn'>
+                            <button className='icon-btn' style={{cursor: 'pointer'}}>
                                 <ShoppingCartOutlined />
                             </button>
                             ]}

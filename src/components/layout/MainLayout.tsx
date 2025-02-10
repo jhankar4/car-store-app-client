@@ -2,12 +2,25 @@
 import { useState } from "react";
 import { Button, Drawer, Layout, Menu, MenuProps } from "antd";
 import { UnorderedListOutlined } from "@ant-design/icons";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hook";
+import { logOut } from "../../redux/features/auth/authSlice";
 
 const { Content } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
-const items: MenuItem[] = [
+
+
+export default function MainLayout() {
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
+    dispatch(logOut());
+    navigate('/login')
+  }
+
+  const items: MenuItem[] = [
     {
       label: <NavLink to={'/home'}>Home</NavLink>,
       key: 'home',
@@ -36,9 +49,12 @@ const items: MenuItem[] = [
       label: <NavLink to={'/signup'}>Signup</NavLink>,
         key: 'Signup',
     },
+    {
+      label: <span onClick={handleLogout}>Logout</span>,
+        key: 'logout',
+    },
   ];
 
-export default function MainLayout() {
     const [current, setCurrent] = useState('mail');
 
     const [open, setOpen] = useState(false);
@@ -53,7 +69,6 @@ export default function MainLayout() {
 
 
   const onClick = (e: any) => {
-    console.log('click ', e);
     setCurrent(e.key);
   };
 

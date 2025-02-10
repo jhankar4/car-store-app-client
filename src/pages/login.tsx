@@ -2,15 +2,30 @@
 import '../styles/login.css'
 import { Form, Input, Button, Typography, Card } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../redux/features/auth/authApi';
+import { useAppDispatch } from '../redux/hook';
+import { setUser } from '../redux/features/auth/authSlice';
+import { verifyToken } from '../utils/verifyToken';
+import { TUser } from '../utils/Type';
 
 const { Title, Text } = Typography;
 
 export default function LoginForm () {
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-  };
 
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [login, { error }] = useLoginMutation();
+  console.log('Error => ', error)
+
+  const onFinish = async (values: any) => {
+    const res = await login(values).unwrap();
+    const user = verifyToken(res?.data?.token) as TUser;
+    console.log(user?.role)
+    dispatch(setUser({user, token: res.data.token}));
+    navigate(`${user?.role === 'user' ? '/' : '/admin/dashboard'}`)
+  };
+  
   return (
     <div className="card-container">
       <Card className="form-card">

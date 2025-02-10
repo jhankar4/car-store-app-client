@@ -1,16 +1,26 @@
 import { Layout, Menu, MenuProps } from 'antd';
 import { NavLink, Outlet } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/hook';
+import { logOut } from '../../redux/features/auth/authSlice';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
-const items: MenuItem[] = [
+
+export default function AdminLayout() {
+
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
+    dispatch(logOut())
+  }
+
+  const items: MenuItem[] = [
     {
-      label: <NavLink to={'/dashboard'}>Dashboard</NavLink>,
+      label: <NavLink to={'/admin/dashboard'}>Dashboard</NavLink>,
       key: 'dashboard',
     },
     {
-      label: <NavLink to={'/shop'}>Shop</NavLink>,
+      label: <NavLink to={'/admin/shop'}>Shop</NavLink>,
         key: 'shop',
     },
     {
@@ -21,9 +31,11 @@ const items: MenuItem[] = [
       label: <NavLink to={'/signup'}>Signup</NavLink>,
         key: 'Signup',
     },
+    {
+      label: <span onClick={handleLogout}>Logout</span>,
+        key: 'logout',
+    },
   ];
-
-export default function AdminLayout() {
 
   return (
     <Layout>
@@ -41,7 +53,7 @@ export default function AdminLayout() {
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0}} />
+        <Header style={{ padding: 0}} onClick={handleLogout} />
         <Content style={{ margin: '24px 16px 0' }}>
           <div
             style={{

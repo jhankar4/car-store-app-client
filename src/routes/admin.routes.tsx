@@ -8,7 +8,7 @@ const adminRoutes = [
         element: <Dashboard />
     },
     {
-        path: 'ashboard',
+        path: 'dashboard',
         element: <Dashboard />
     },
     {

@@ -4,13 +4,18 @@ import Signup from "../pages/signup";
 import App from "../App";
 import userRoutes from "./user.routes";
 import adminRoutes from "./admin.routes";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
 
-const user = 'user';
 const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
-        children: user === 'user' ? userRoutes : adminRoutes 
+        children: userRoutes 
+    },
+    {
+        path: '/admin',
+        element: <ProtectedRoute> <App /> </ProtectedRoute>,
+        children: adminRoutes 
     },
     {
         path: '/login',
