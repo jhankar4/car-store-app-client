@@ -1,76 +1,96 @@
-// import { EditOutlined } from '@ant-design/icons'
-import { ShoppingCartOutlined } from '@ant-design/icons';
-import { Card, Carousel } from 'antd'
-import Meta from 'antd/es/card/Meta'
-import { useMediaQuery } from 'react-responsive';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ShoppingCartOutlined } from "@ant-design/icons";
+import { Button, Card, Col, Row } from "antd";
+import Meta from "antd/es/card/Meta";
+import { useNavigate } from "react-router-dom";
 
-export default function SpecialOffersCards() {
-
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
-  const isTablet = useMediaQuery({ query: '(max-width: 1024px)' });
-
-  let slidesToShow = 4;
-  if (isMobile) {
-    slidesToShow = 1;
-  } else if (isTablet) {
-    slidesToShow = 2;
-  }
-
+const Products = ({heading, showItem, showFeatured}: any) => {
+  const navigate = useNavigate();
+  
     type TOfferItem = {
         name: string;
         model: string;
-        image: string
+        image: string;
+        featured: boolean;
       };
 
-    const offerItems: TOfferItem[] = [
+    const featuredItems: TOfferItem[] = [
         {
           name: '74 DS DS 4',
+          featured: true,
           model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
           image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/PEUGEOT/208/5DR/73Peu208GT5drWhiFR_800.jpg'
         },
         {
             name: '72 DS DS 4',
+            featured: true,
             model: '5.2 HYBRID 136 Pallas 5dr e-DSC',
             image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/BMW/1%20SERIES/5DR/73Bmw1se118MspoAuy5drGryFR4_800.jpg'
           },
         {
           name: '74 DS DS 4',
+          featured: true,
           model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
           image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/JEEP/AVENGER/5DR/24JeeAveAlt5drYelFR3_800.jpg'
         },
         {
             name: '72 DS DS 4',
+            featured: true,
             model: '5.2 HYBRID 136 Pallas 5dr e-DSC',
             image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/LEAPMOTOR/C10/5DR/74LeaC105DrGrnFR4_800.jpg'
           },
         {
           name: '74 DS DS 4',
+          featured: true,
           model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
           image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/ALFA%20ROMEO/JUNIOR/5DR/74AlfJunElec5drRedFR8_800.jpg'
         },
         {
             name: '74 DS DS 4',
+            featured: true,
             model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
             image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/PEUGEOT/208/5DR/73Peu208GT5drWhiFR_800.jpg'
           },
+          {
+            name: '74 DS DS 4',
+            featured: true,
+            model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
+            image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/PEUGEOT/208/5DR/73Peu208GT5drWhiFR_800.jpg'
+          },
+          {
+              name: '72 DS DS 4',
+              featured: true,
+              model: '5.2 HYBRID 136 Pallas 5dr e-DSC',
+              image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/BMW/1%20SERIES/5DR/73Bmw1se118MspoAuy5drGryFR4_800.jpg'
+            },
+            {
+              name: '72 DS DS 4',
+              featured: false,
+              model: '5.2 HYBRID 136 Pallas 5dr e-DSC',
+              image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/LEAPMOTOR/C10/5DR/74LeaC105DrGrnFR4_800.jpg'
+            },
+          {
+            name: '74 DS DS 4',
+            featured: false,
+            model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
+            image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/ALFA%20ROMEO/JUNIOR/5DR/74AlfJunElec5drRedFR8_800.jpg'
+          },
       ];
 
-
+      const itemsToDisplay = showFeatured
+    ? featuredItems.filter(item => item.featured) // Only show featured items
+    : featuredItems;
   return (
-    <section className="container special-offers section">
-        <h2 className="heading">Special offers</h2>
-
-        <Carousel arrows dots={false} infinite={true} 
-        pauseOnHover={false}
-        slidesToShow={slidesToShow} autoplay={true}
-        autoplaySpeed={3500}
-        className='slider-wrapper'
-        >
-            {
-                offerItems.map( (item, index) => (
-                    <div className="single-slide" key={index} >
+    <section className="container section" style={{ paddingTop: 0 }}>
+        <h2 className="heading">{heading}</h2>
+        <Row gutter={[0, 10]}>
+        {
+                itemsToDisplay.slice(0, showItem ? showItem : featuredItems.length).map( (item, index) => (
+                  
+                  <Col sm={24} md={12} lg={6} className="single-item" key={index} >
                         <Card
-                        className='card'
+                            className='card'
+                            style={{ marginLeft: '5px', marginRight: '5px' }}
                             cover={
                             <img
                                 alt="Car"
@@ -95,10 +115,19 @@ export default function SpecialOffersCards() {
                             description={item.model}
                             />
                         </Card>
-                    </div>
+                    </Col>
+                    
                 ))
             }
-        </Carousel>
+        </Row>
+        {
+          showFeatured &&
+          <div style={{textAlign: 'center', paddingTop: '50px'}}>
+                <Button variant="solid" size="large" onClick={() => navigate('/shop')} className="custom-button" >View All</Button>
+          </div>
+        }
     </section>
   )
 }
+
+export default Products

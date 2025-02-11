@@ -106,11 +106,11 @@
   .animate-img img {
     animation: fadeSlide 0.8s ease-in-out;
   }
-.special-offers{
+.section{
     padding-top: 70px;
     padding-bottom: 70px;
 }
-.special-offers .heading{
+.heading{
     border-bottom: 1px solid #ddd;
     position: relative;
     padding: 10px;
@@ -121,14 +121,15 @@
 
     margin-left: 10px;
     margin-right: 10px;
+    display: inline-block;
 }
-.special-offers .heading:before{
+.heading:before{
     content: '';
     bottom: 0px;
     left: 0px;
     position: absolute;
     display: block;
-    width: 135px;
+    width: 100%;
     height: 2px;
     border-bottom: 2px solid #212121;
     
@@ -157,4 +158,32 @@
 .special-offers .slick-prev:after{
     top: 12px;
     left: 14px;
+}
+
+.custom-button{
+    font-size: 18px;
+    font-weight: 400;
+    padding-right: 18px;
+    padding-left: 18px;
+}
+.custom-button:hover{
+    border-color: #7427e0 !important;
+    color: #7427e0 !important;
+}
+
+.banner{ 
+    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.banner:before{
+    background-color: #7b41c8b8;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    content: '';
+    display: block;
 }

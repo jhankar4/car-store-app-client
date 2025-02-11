@@ -3,8 +3,9 @@ import { useState } from "react";
 import { Button, Drawer, Layout, Menu, MenuProps } from "antd";
 import { UnorderedListOutlined } from "@ant-design/icons";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../redux/hook";
-import { logOut } from "../../redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { logOut, useCurrentToken } from "../../redux/features/auth/authSlice";
+import FooterSection from "../ui/FooterSection";
 
 const { Content } = Layout;
 
@@ -30,10 +31,6 @@ export default function MainLayout() {
       key: 'about',
     },
     {
-      label: <NavLink to={'/contact'}>Contact</NavLink>,
-      key: 'contact',
-    },
-    {
       label: <NavLink to={'/blog'}>Blog</NavLink>,
         key: 'blog',
     },
@@ -41,19 +38,29 @@ export default function MainLayout() {
       label: <NavLink to={'/shop'}>Shop</NavLink>,
         key: 'shop',
     },
+  ];
+
+  const token = useAppSelector(useCurrentToken);
+if (!token) {
+  items.push(
     {
       label: <NavLink to={'/login'}>Login</NavLink>,
-        key: 'login',
+      key: 'login',
     },
     {
       label: <NavLink to={'/signup'}>Signup</NavLink>,
-        key: 'Signup',
-    },
+      key: 'signup',
+    }
+  );
+}
+if (token) {
+  items.push(
     {
       label: <span onClick={handleLogout}>Logout</span>,
         key: 'logout',
     },
-  ];
+  );
+}
 
     const [current, setCurrent] = useState('mail');
 
@@ -81,13 +88,13 @@ export default function MainLayout() {
             <div className="lg-screen-nav" style={{ }}>
                 <div style={{  background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
                     <div style={{maxWidth: '1400px',margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 20px', }}>
-                        <NavLink to={'/'} style={{ cursor: 'pointer' }}>
+                        <NavLink to={'/home'} style={{ cursor: 'pointer' }}>
                             <img src="/carnest-logo.png" alt="Logo" style={{ height: '40px' }} />
                         </NavLink>
                         
                         <Menu onClick={onClick} selectedKeys={[current]} 
                         mode="horizontal" items={items}
-                        style={{borderBottom: 'none'}}
+                        style={{ borderBottom: 'none', minWidth: '500px', justifyContent: 'flex-end' }}
                         />
                     </div>
                 </div>
@@ -107,6 +114,8 @@ export default function MainLayout() {
             <Content style={{ padding: 0 }}>
               <Outlet />
             </Content>
+
+            <FooterSection />
         </Layout>
     </Layout>
   )

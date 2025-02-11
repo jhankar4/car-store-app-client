@@ -39,7 +39,8 @@ export default function HeroSlider() {
                                 <p className="sub-headline">{item.description}</p>
                                 <Card style={{ width: 350 }}>
                                     <p style={{fontSize: '18px',marginBottom: '10px', textAlign: 'center'}}>Find your next car, nationwide.</p>
-                                    <Button color="purple" variant="solid" block>
+                                    <Button color="purple" variant="solid" size="large" block
+                                    style={{ fontSize: '17px', fontWeight: '400' }}>
                                         Shop now
                                     </Button>
                                 </Card>

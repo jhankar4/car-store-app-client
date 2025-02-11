@@ -1,0 +1,43 @@
+.footer {
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+  }
+  
+  .footer .logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .footer .quick-links ul {
+    padding-left: 0;
+  }
+  
+  .footer .quick-links li {
+    margin-bottom: 8px;
+  }
+  
+  .footer .newsletter {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .footer .newsletter input {
+    margin-bottom: 10px;
+  }
+  
+  .footer .ant-divider {
+    border-color: #fff;
+  }
+  
+  @media (max-width: 768px) {
+    .footer .logo-section {
+      text-align: center;
+    }
+    .footer .quick-links,
+    .footer .newsletter {
+      text-align: center;
+    }
+  }
+  

@@ -1,7 +1,12 @@
+import AboutUsCard from "../components/ui/AboutUsCard";
+
 export default function about() {
   return (
-    <div>
-      <h1>Hello from about</h1>
-    </div>
+    <>
+    <section className="banner" style={{width: '100%', height: '350px', backgroundImage: `url('/about-us.png')`}}>
+      
+      </section>
+      <AboutUsCard />
+    </>
   )
 }
