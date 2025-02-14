@@ -1,10 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import { EditOutlined } from '@ant-design/icons'
-import { ShoppingCartOutlined } from '@ant-design/icons';
-import { Card, Carousel } from 'antd'
-import Meta from 'antd/es/card/Meta'
+import { Carousel, Col, Row, Skeleton } from 'antd'
 import { useMediaQuery } from 'react-responsive';
+import ProductCard from './ProductCard';
+import { useGetProductsQuery } from '../../redux/features/Products/productApi';
 
 export default function SpecialOffersCards() {
+
+  const { isLoading, data } = useGetProductsQuery(undefined, {
+      refetchOnMountOrArgChange: true,
+    });
 
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const isTablet = useMediaQuery({ query: '(max-width: 1024px)' });
@@ -15,47 +20,21 @@ export default function SpecialOffersCards() {
   } else if (isTablet) {
     slidesToShow = 2;
   }
+  if (isLoading) {
+    return (
+      <section className="container section" style={{ paddingTop: 0 }}>
+        <h2 className="heading">Special offers</h2>
+        <Row gutter={[0, 10]}>
+            <Col sm={24} md={12} lg={6} className="single-item">
+              <Skeleton active avatar paragraph={{ rows: 2 }} />
+            </Col>
+        </Row>
+      </section>
+    );
+  }
 
-    type TOfferItem = {
-        name: string;
-        model: string;
-        image: string
-      };
-
-    const offerItems: TOfferItem[] = [
-        {
-          name: '74 DS DS 4',
-          model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
-          image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/PEUGEOT/208/5DR/73Peu208GT5drWhiFR_800.jpg'
-        },
-        {
-            name: '72 DS DS 4',
-            model: '5.2 HYBRID 136 Pallas 5dr e-DSC',
-            image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/BMW/1%20SERIES/5DR/73Bmw1se118MspoAuy5drGryFR4_800.jpg'
-          },
-        {
-          name: '74 DS DS 4',
-          model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
-          image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/JEEP/AVENGER/5DR/24JeeAveAlt5drYelFR3_800.jpg'
-        },
-        {
-            name: '72 DS DS 4',
-            model: '5.2 HYBRID 136 Pallas 5dr e-DSC',
-            image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/LEAPMOTOR/C10/5DR/74LeaC105DrGrnFR4_800.jpg'
-          },
-        {
-          name: '74 DS DS 4',
-          model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
-          image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/ALFA%20ROMEO/JUNIOR/5DR/74AlfJunElec5drRedFR8_800.jpg'
-        },
-        {
-            name: '74 DS DS 4',
-            model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
-            image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/PEUGEOT/208/5DR/73Peu208GT5drWhiFR_800.jpg'
-          },
-      ];
-
-
+  const offerItems = data.data.filter((item: any) => item.isOnSale && item.inStock);
+  console.log(offerItems)
   return (
     <section className="container special-offers section">
         <h2 className="heading">Special offers</h2>
@@ -67,34 +46,9 @@ export default function SpecialOffersCards() {
         className='slider-wrapper'
         >
             {
-                offerItems.map( (item, index) => (
+                offerItems.map( (item: any, index: number) => (
                     <div className="single-slide" key={index} >
-                        <Card
-                        className='card'
-                            cover={
-                            <img
-                                alt="Car"
-                                src={item?.image}
-                            />
-                            }
-                            actions={[
-                            <div style={{textAlign: 'left', marginLeft: '15px'}}>
-                                <span style={{color: '#212121', fontWeight: '500'}}>Price</span>
-                                <br />
-                                <span style={{textDecoration: 'line-through'}}>$3500</span>
-                                &nbsp;&nbsp;
-                                <span style={{color: '#212121', fontWeight: '500'}}>$2200</span>
-                            </div>,
-                            <button className='icon-btn' style={{cursor: 'pointer'}}>
-                                <ShoppingCartOutlined />
-                            </button>
-                            ]}
-                            >
-                            <Meta
-                            title={item.name}
-                            description={item.model}
-                            />
-                        </Card>
+                        <ProductCard item={item} />
                     </div>
                 ))
             }

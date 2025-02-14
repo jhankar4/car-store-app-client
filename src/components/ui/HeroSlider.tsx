@@ -1,8 +1,10 @@
 import { Button, Card, Carousel, Col, Row } from "antd";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function HeroSlider() {
     const [animate, setAnimate] = useState(false);
+    const navigate = useNavigate();
 
       type THeroItem = {
         title: string;
@@ -21,6 +23,9 @@ export default function HeroSlider() {
         },
       ];
 
+      const goToShop = () => {
+        navigate('/shop')
+      }
       
   return (
     <Carousel arrows={false} dots={false} infinite={true} autoplay={true} autoplaySpeed={5500}
@@ -40,6 +45,7 @@ export default function HeroSlider() {
                                 <Card style={{ width: 350 }}>
                                     <p style={{fontSize: '18px',marginBottom: '10px', textAlign: 'center'}}>Find your next car, nationwide.</p>
                                     <Button color="purple" variant="solid" size="large" block
+                                    onClick={() => goToShop()}
                                     style={{ fontSize: '17px', fontWeight: '400' }}>
                                         Shop now
                                     </Button>

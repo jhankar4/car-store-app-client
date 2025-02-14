@@ -1,120 +1,51 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ShoppingCartOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Row } from "antd";
-import Meta from "antd/es/card/Meta";
+import { Button, Col, Row, Skeleton } from "antd";
 import { useNavigate } from "react-router-dom";
+import ProductCard from "./ProductCard";
+import { useGetProductsQuery } from "../../redux/features/Products/productApi";
 
-const Products = ({heading, showItem, showFeatured}: any) => {
+const Products = ({heading, showItem, showFeatured, filteredProducts, isLoading: filterLoading}: any) => {
+  const { isLoading, data } = useGetProductsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+
   const navigate = useNavigate();
   
-    type TOfferItem = {
-        name: string;
-        model: string;
-        image: string;
-        featured: boolean;
-      };
+  if (isLoading || filterLoading) {
+    return (
+      <section className="container section" style={{ paddingTop: 0 }}>
+        <h2 className="heading">{heading}</h2>
+        <Row gutter={[0, 10]}>
+          {Array.from({ length: showItem || 8 }).map((_, index) => (
+            <Col sm={24} md={12} lg={6} className="single-item" key={index}>
+              <Skeleton active avatar paragraph={{ rows: 2 }} />
+            </Col>
+          ))}
+        </Row>
+      </section>
+    );
+  }
 
-    const featuredItems: TOfferItem[] = [
-        {
-          name: '74 DS DS 4',
-          featured: true,
-          model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
-          image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/PEUGEOT/208/5DR/73Peu208GT5drWhiFR_800.jpg'
-        },
-        {
-            name: '72 DS DS 4',
-            featured: true,
-            model: '5.2 HYBRID 136 Pallas 5dr e-DSC',
-            image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/BMW/1%20SERIES/5DR/73Bmw1se118MspoAuy5drGryFR4_800.jpg'
-          },
-        {
-          name: '74 DS DS 4',
-          featured: true,
-          model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
-          image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/JEEP/AVENGER/5DR/24JeeAveAlt5drYelFR3_800.jpg'
-        },
-        {
-            name: '72 DS DS 4',
-            featured: true,
-            model: '5.2 HYBRID 136 Pallas 5dr e-DSC',
-            image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/LEAPMOTOR/C10/5DR/74LeaC105DrGrnFR4_800.jpg'
-          },
-        {
-          name: '74 DS DS 4',
-          featured: true,
-          model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
-          image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/ALFA%20ROMEO/JUNIOR/5DR/74AlfJunElec5drRedFR8_800.jpg'
-        },
-        {
-            name: '74 DS DS 4',
-            featured: true,
-            model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
-            image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/PEUGEOT/208/5DR/73Peu208GT5drWhiFR_800.jpg'
-          },
-          {
-            name: '74 DS DS 4',
-            featured: true,
-            model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
-            image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/PEUGEOT/208/5DR/73Peu208GT5drWhiFR_800.jpg'
-          },
-          {
-              name: '72 DS DS 4',
-              featured: true,
-              model: '5.2 HYBRID 136 Pallas 5dr e-DSC',
-              image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/BMW/1%20SERIES/5DR/73Bmw1se118MspoAuy5drGryFR4_800.jpg'
-            },
-            {
-              name: '72 DS DS 4',
-              featured: false,
-              model: '5.2 HYBRID 136 Pallas 5dr e-DSC',
-              image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/LEAPMOTOR/C10/5DR/74LeaC105DrGrnFR4_800.jpg'
-            },
-          {
-            name: '74 DS DS 4',
-            featured: false,
-            model: '1.2 HYBRID 136 Pallas 5dr e-DSC',
-            image: 'https://d1ek71enupal89.cloudfront.net/images/blocks_png/ALFA%20ROMEO/JUNIOR/5DR/74AlfJunElec5drRedFR8_800.jpg'
-          },
-      ];
+  console.log(filteredProducts)
 
-      const itemsToDisplay = showFeatured
-    ? featuredItems.filter(item => item.featured) // Only show featured items
-    : featuredItems;
+  let itemsToDisplay;
+  if(!filteredProducts){
+    itemsToDisplay = showFeatured
+    ? data?.data.filter((item: any) => item?.featured) // Only show featured items
+    : data?.data;
+  }else{
+    itemsToDisplay = filteredProducts.data;
+  }
+      
   return (
     <section className="container section" style={{ paddingTop: 0 }}>
         <h2 className="heading">{heading}</h2>
         <Row gutter={[0, 10]}>
         {
-                itemsToDisplay.slice(0, showItem ? showItem : featuredItems.length).map( (item, index) => (
+                itemsToDisplay.slice(0, showItem ? showItem : data.length).map( (item: any, index: number) => (
                   
                   <Col sm={24} md={12} lg={6} className="single-item" key={index} >
-                        <Card
-                            className='card'
-                            style={{ marginLeft: '5px', marginRight: '5px' }}
-                            cover={
-                            <img
-                                alt="Car"
-                                src={item?.image}
-                            />
-                            }
-                            actions={[
-                            <div style={{textAlign: 'left', marginLeft: '15px'}}>
-                                <span style={{color: '#212121', fontWeight: '500'}}>Price</span>
-                                <br />
-                                <span style={{textDecoration: 'line-through'}}>$3500</span>
-                                &nbsp;&nbsp;
-                                <span style={{color: '#212121', fontWeight: '500'}}>$2200</span>
-                            </div>,
-                            <button className='icon-btn' style={{cursor: 'pointer'}}>
-                                <ShoppingCartOutlined />
-                            </button>
-                            ]}
-                            >
-                            <Meta
-                            title={item.name}
-                            description={item.model}
-                            />
-                        </Card>
+                        <ProductCard item={item} />
                     </Col>
                     
                 ))
